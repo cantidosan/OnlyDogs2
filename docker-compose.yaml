@@ -1,0 +1,20 @@
+version: '2.4'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PORT=5432
+      - DATABASE=user_accounts
+      - HOST=localhost
+    volumes:
+      - backend-data:/var/lib/postgresql/data:delegated
+
+volumes:
+  backend-data:
