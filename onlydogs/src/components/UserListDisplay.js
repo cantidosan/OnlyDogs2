@@ -7,12 +7,15 @@ import { useEffect } from 'react';
 export default function UserListDisplay() {
 
     useEffect(() => {
-        fetch("https://localhost:3001")
+        console.log("LOGGED")
+        fetch("http://localhost:3001")
             .then(res => res.json())
-            .then(result)=> {
+            .then(
+                (result) => {
+                    console.log('Results: %o', result)
 
-        }
-    })
+                })
+    }, [])
 
 
     return (

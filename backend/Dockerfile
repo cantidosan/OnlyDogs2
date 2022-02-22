@@ -1,5 +1,8 @@
-# pull official base image
-FROM postgres:14.2-alpine
+FROM node:16-alpine3.14
 
-# run init.sql
-ADD init.sql /docker-entrypoint-initdb.d
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3001
+CMD  [ "npm","start" ]

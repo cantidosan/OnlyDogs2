@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function PetCard(props) {
+
+
     return (
 
         <div className="bg-cyan-100 flex  items-center 

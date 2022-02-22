@@ -8,10 +8,13 @@
     "express": "^4.17.2",
     "pg": "^8.7.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.15"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres PORT=5432 DATABASE=user_accounts HOST=localhost  node index.js "
+    "start": "nodemon index.js  "
   },
   "author": "",
   "license": "ISC"

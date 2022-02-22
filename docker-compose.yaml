@@ -1,9 +1,31 @@
 version: '2.4'
 
 services:
-  backend:
+
+  node_backend:
+    container_name: node_backend
     build:
+      dockerfile: Dockerfile
       context: ./backend
+    ports:
+      - '3001:3001'
+
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+      - DATABASE=onlydogs
+      - HOST=localhost
+      - POSTGRES_HOST=db
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./backend:/usr/src/app:cached
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db
       dockerfile: Dockerfile
     ports:
       - 5432:5432
@@ -11,10 +33,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - PORT=5432
-      - DATABASE=user_accounts
+      - DATABASE=onlydogs
       - HOST=localhost
     volumes:
-      - backend-data:/var/lib/postgresql/data:delegated
+      - db-data:/var/lib/postgresql/data:delegated
 
 volumes:
-  backend-data:
+  db-data:
