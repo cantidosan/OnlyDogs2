@@ -44,7 +44,7 @@ const pets = [
     },
     {
         id: "12345",
-        label: "POlo",
+        label: "Polo",
         href: "https://picsum.photos/1920/1080",
         breed: "Linxs",
         age: "28"
