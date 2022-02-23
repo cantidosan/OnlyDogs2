@@ -11,8 +11,8 @@ export default function UserListDisplay() {
         fetch("http://localhost:3001")
             .then(res => res.json())
             .then(
-                (result) => {
-                    console.log('Results: %o', result)
+                (pets) => {
+                    console.log('Results: %o', pets)
 
                 })
     }, [])

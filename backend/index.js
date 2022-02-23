@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
     /* pool method makes request for picstures from the db */
 
-    pool.query('SELECT * FROM users', (error, results) => {
+    pool.query('SELECT * FROM pets', (error, results) => {
         if (error) {
 
             res.status(500)
