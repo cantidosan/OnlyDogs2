@@ -7,6 +7,8 @@ const port = 3001 /// process.env.PORT instead of hardcode
 app.use(cors())
 app.options('*', cors())
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
 
@@ -25,10 +27,31 @@ app.get('/', (req, res) => {
 
 })
 
+
+const credential = []
+
+
 app.post('/login', (req, res) => {
 
-    console.log("ENDPOINT PLZ")
+    const { username } = req.body;
+    console.log(username)
+    const loginQuery = `SELECT username FROM users WHERE username = '${username}';`
     /*pool method takes inc params and execute thier resp methods */
+
+
+    pool.query(loginQuery, (error, results) => {
+        if (error) {
+            ///res.status(500)
+            ///console.log('login error')
+        }
+        else {
+            res.json({ message: results })
+        }
+
+
+    })
+
+
 
 })
 

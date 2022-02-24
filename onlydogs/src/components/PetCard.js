@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 
 export default function PetCard(props) {
 
+    const { pet } = props;
+    console.log(pet)
 
     return (
 
@@ -12,7 +14,7 @@ export default function PetCard(props) {
                 and LInk it to Userpage.js
 
                 */}
-                {props.pet.label}
+                {pet.petname}
 
             </div>
 

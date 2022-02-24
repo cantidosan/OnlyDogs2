@@ -1,38 +1,58 @@
 import React from 'react';
 import { useState } from "react";
+import Axios from 'axios';
 
 ///We'll be using Oauth to build this piece out
 export default function Login() {
 
-    const [name, setName] = useState("");
+    const [username, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        {/*loginUser(name,password)*/ }
+
+
+        const res = await fetch("http://localhost:3001/login", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+
+        });
+        ///const response = await res.json();
+        const content = await res.json();
+        console.log(content.message.rowCount)
+
+
+
+
     }
 
     return (
         <div>
-            <form className='login-wrapper display: flex;
-                flex-direction: column;
-                align-items: center' onSubmit={handleSubmit}>
+            <label>
+                <p>Username</p>
+                <input type="text" value={username} onChange={
+                    e => setName(e.target.value)} />
+            </label>
+            <label>
+                <p>Password</p>
+                <input type="password" value={password} onChange={
+                    e => setPassword(e.target.value)} />
+            </label>
+            <label>
+                <p>Email</p>
+                <input type="email" value={email} onChange={
+                    e => setEmail(e.target.value)} />
+            </label>
+            <div>
+                <button type="button" onClick={handleSubmit}>Submit</button>
+            </div>
 
-                <label>
-                    <p>Username</p>
-                    <input type="text" value={name} onChange={
-                        e => setName(e.target.value)} />
-                </label>
-                <label>
-                    <p>Password</p>
-                    <input type="password" value={password} onChange={
-                        e => setPassword(e.target.value)} />
-                </label>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
 
-            </form>
         </div>
 
     );

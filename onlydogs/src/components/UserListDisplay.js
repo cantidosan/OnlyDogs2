@@ -1,20 +1,25 @@
 import React from 'react';
 import PetCard from './PetCard';
-import pets from '../petinfo';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 ////displays users on the left side of Featured component
 
 export default function UserListDisplay() {
 
+    const [petData, setPetData] = useState();
+
     useEffect(() => {
-        console.log("LOGGED")
+
+
         fetch("http://localhost:3001")
             .then(res => res.json())
             .then(
                 (pets) => {
-                    console.log('Results: %o', pets)
+                    console.log(pets)
+                    setPetData(pets)
 
                 })
+
     }, [])
 
 
@@ -22,8 +27,10 @@ export default function UserListDisplay() {
         <>
             <div className="flex basis-1/2 flex-row flex-wrap " >
 
-                {pets.map((pet, key) => (
+                {petData.map((pet, key) => (
+
                     <PetCard pet={pet} key={key} />
+
                 ))}
 
             </div>
