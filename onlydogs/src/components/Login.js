@@ -1,13 +1,19 @@
 import React from 'react';
 import { useState } from "react";
 import Axios from 'axios';
+import UserPage from './UserPage';
+import { useNavigate } from 'react-router-dom';
 
 ///We'll be using Oauth to build this piece out
+
 export default function Login() {
 
     const [username, setName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState("");
+    let navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +30,16 @@ export default function Login() {
         });
         ///const response = await res.json();
         const content = await res.json();
-        console.log(content.message.rowCount)
+        if (content.message.rowCount !== 0) {
+
+            setIsLoggedIn("true");
+            console.log(isLoggedIn)
+
+            return navigate(`/${username}`);
+        }
+        else {
+            return navigate("login");
+        }
 
 
 
@@ -50,6 +65,9 @@ export default function Login() {
             </label>
             <div>
                 <button type="button" onClick={handleSubmit}>Submit</button>
+
+
+
             </div>
 
 

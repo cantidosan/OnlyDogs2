@@ -4,17 +4,18 @@ import user from './users';
 import GalleryPics from './GalleryPics';
 
 
-export default function UserPicGallery() {
+export default function UserPicGallery(props) {
 
+    const { userPics } = props;
 
     return (
         <div className="flex " >
 
             <div className='flex flex-wrap '>
 
-                {pets.slice(0, 8).map((pet, key) => (
+                {userPics.map((user, key) => (
 
-                    <GalleryPics pet={pet} key={key} />
+                    <GalleryPics user={user} key={key} />
 
 
                 ))};

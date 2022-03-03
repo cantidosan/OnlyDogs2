@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 ///Displays random media from users onto home page
 export default function Featured() {
 
-    const [petData, setPetData] = useState();
+    const [petData, setPetData] = useState([]);
 
     useEffect(() => {
 

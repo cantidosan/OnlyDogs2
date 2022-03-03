@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function UserListDisplay() {
 
-    const [petData, setPetData] = useState();
+    const [petData, setPetData] = useState([]);
 
     useEffect(() => {
 
@@ -15,7 +15,7 @@ export default function UserListDisplay() {
             .then(res => res.json())
             .then(
                 (pets) => {
-                    console.log(pets)
+                    console.log(typeof pets)
                     setPetData(pets)
 
                 })

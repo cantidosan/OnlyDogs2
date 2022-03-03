@@ -5,18 +5,6 @@ import { useState, useEffect } from 'react';
 
 export default function Comment(props) {
 
-    const [baconLink, setBaconLink] = useState(['https://baconipsum.com/api/?type=all-meat&sentences=1&start-with-lorem=1'])
-
-    useEffect(() => {
-
-        fetch(baconLink)
-
-            .then(response => response.json())
-
-            .then(response => setBaconLink(response))
-
-
-    }, [])
 
 
     return (
@@ -31,13 +19,13 @@ export default function Comment(props) {
                 <Container  >
                     <Row >
                         <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} sm={2}>
-                            <Image roundedCircle thumbnail src={props.use.href} />
+                            <Image roundedCircle thumbnail src={props.commentD.user_pic_url} />
                         </Col>
                         <Col sm={8}>
                             <Card.Body>
-                                <Card.Title>{props.use.label}</Card.Title>
+                                <Card.Title>{props.commentD.username}</Card.Title>
                                 <Card.Text>
-                                    {baconLink}
+                                    {props.commentD.text}
                                 </Card.Text>
                             </Card.Body>
                         </Col>

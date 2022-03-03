@@ -2,11 +2,14 @@ import React from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 
 
-export default function DisplayPic() {
+export default function DisplayPic(props) {
+
+    const { url } = props;
+
     return (
         <div>
             {/* display user main profile image */}
-            <img src="https://picsum.photos/720/560" alt="" />
+            <img src={url} alt="" />
             <h2>PIC DETAILS</h2>
             <div className='flex flex-row justify-center'>
                 <ButtonGroup>
