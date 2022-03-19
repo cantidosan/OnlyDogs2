@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@cloudinary/react": "^1.2.0",
+    "@cloudinary/url-gen": "^1.7.0",
     "cross-env": "^7.0.3",
     "express": "^4.17.2",
     "pg": "^8.7.3"

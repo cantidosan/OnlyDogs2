@@ -1,33 +1,84 @@
 import React from 'react';
-import { Image, Card, Container, Row, Col } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { Image, Card, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
+
+
 
 
 export default function Comment(props) {
+
+    const params = useParams();
+
+
+    const {
+        commentD,
+        userAvatarUrl,
+        username,
+        onDeleteComment,
+
+    } = props;
+
+    const {
+        comment_id: commentId,
+        pic_id: picId,
+        user_id: userId,
+        text,
+
+    } = commentD;
+
+
+    let navigate = useNavigate();
+
+    const handleDeleteComment = async () => {
+
+        // navigate(`/${params.username}/comments/${params.commentId}`)
+
+        const res = await fetch(`http://localhost:3001/${params.username}/comments`, {
+
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ commentId })
+
+        });
+
+        onDeleteComment(commentId);
+
+    }
+
+
+    const handleLikeComment = async () => {
+
+
+    }
+
 
 
 
     return (
         <div className=''>
-            {/*<div className=''>
-                <h6>{props.use.label}</h6>
-                <Image roundedCircle thumbnail width="60" src={props.use.href} alt="" />
-                <p>{baconLink}</p>
-            </div> */}
 
             <Card style={{ width: '34rem' }}>
                 <Container  >
                     <Row >
                         <Col style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} sm={2}>
-                            <Image roundedCircle thumbnail src={props.commentD.user_pic_url} />
+                            <Image roundedCircle thumbnail src={userAvatarUrl} />
                         </Col>
                         <Col sm={8}>
                             <Card.Body>
-                                <Card.Title>{props.commentD.username}</Card.Title>
+                                <Card.Title>{username}</Card.Title>
                                 <Card.Text>
-                                    {props.commentD.text}
+                                    {text}
                                 </Card.Text>
                             </Card.Body>
+                        </Col>
+                        <Col style={{ justifyContent: 'right' }} sm={2}>
+                            <ButtonGroup >
+                                {/* <Button variant="primary" size="mb-2" onClick={handleLikeComment}>Like</Button> */}
+                                <Button variant="danger" onClick={handleDeleteComment}>Delete</Button>
+                            </ButtonGroup>
                         </Col>
                     </Row>
 
@@ -35,13 +86,7 @@ export default function Comment(props) {
             </Card>
 
 
-
-
-
-
-
-
-
         </div>
-    );
+    )
+
 }

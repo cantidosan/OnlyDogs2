@@ -29,7 +29,7 @@ export default function UserPage() {
 
             // Ensure responseJson is suitable object to pass into components
             //below
-            console.log('responseJson :', responseJson)
+            // console.log('responseJson :', responseJson)
 
             //Set object into local state variable
             setUserPics(responseJson);
@@ -38,7 +38,7 @@ export default function UserPage() {
         getUserPics();
     }, [params.username]);
 
-    console.log('user', userPics)
+    // console.log('user', userPics)
     return (
 
         <div>

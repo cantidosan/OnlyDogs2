@@ -88,15 +88,26 @@ app.get('/:username', (req, res) => {
 app.get('/:username/comments', (req, res) => {
 
   const username = req.params.username;
-  const commentQuery = `SELECT 
-                            text                             
-                          FROM 
-                            comment
-                          INNER JOIN
-                            users 
-                          ON 
-                            users.user_id  = comment.user_id  
-                          WHERE  username = $1`;
+
+
+  const commentQuery = `SELECT *
+                          FROM comment
+                          WHERE user_id = (
+                            SELECT user_id FROM 
+                        users WHERE username = $1
+                          )
+                        `;
+
+
+  // const commentQuery = `SELECT 
+  //                           *                             
+  //                         FROM 
+  //                           comment
+  //                         JOIN
+  //                           users 
+  //                         ON 
+  //                           users.user_id  = comment.user_id  
+  //                         WHERE  username = $1`;
 
   pool.query(commentQuery, [username], (error, results) => {
 
@@ -156,13 +167,39 @@ app.post('/:username/comments', (req, res) => {
       })
     }
 
-
-
-
   })
 
+})
+
+
+app.delete('/:username/comments/', (req, res) => {
+
+  // const { commentId } = req.params;
+
+  // console.log('the comment ID', commentId)
+
+  const { commentId } = req.body;
+
+  deleteCommentQuery = `DELETE FROM comment
+                        WHERE comment_id = $1;
+                        `
+
+  pool.query(deleteCommentQuery, [commentId], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+      res.json({
+        message: results
+      })
+    }
+  })
 
 })
+
 
 
 

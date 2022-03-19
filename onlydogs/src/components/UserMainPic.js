@@ -1,6 +1,4 @@
 import React from 'react';
-import user from './users';
-import pets from '../petinfo';
 import DisplayPic from './DisplayPic';
 import MiniGallery from './MiniGallery';
 import Comments from './Comments';
@@ -10,10 +8,11 @@ import Comments from './Comments';
 export default function UserMainPic(props) {
 
     const { url, username, picId } = props;
-    console.log(url)
+    // console.log(url)*
 
 
     function handleAddComments(commentValue) {
+
 
         console.log(commentValue)
     }

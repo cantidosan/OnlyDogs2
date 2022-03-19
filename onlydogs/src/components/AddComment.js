@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 export default function AddComment(props) {
 
     const [commentValue, setCommentValue] = useState("");
     const params = useParams();
+
     const { url, onAdd, picId } = props;
 
 
@@ -24,12 +25,13 @@ export default function AddComment(props) {
             body: JSON.stringify({ commentValue, picId })
 
         });
-        console.log(params)
+
+        // console.log('params', params)
         onAdd(commentValue);
-
-
+        setCommentValue("");
 
     }
+
 
     const handleInput = (e) => {
 
@@ -45,7 +47,7 @@ export default function AddComment(props) {
                             text-gray-700 placeholder-gray-600 
                             border rounded-lg focus:shadow-outline"
                 placeholder="comment..."
-                onChange={handleInput}
+                onChange={handleInput} value={commentValue}
             >
 
             </textarea>
@@ -54,7 +56,6 @@ export default function AddComment(props) {
                             font-bold py-2 px-4 border 
                             border-blue-700 rounded"
                 onClick={handleSubmit}
-
             >
                 submit
             </button>

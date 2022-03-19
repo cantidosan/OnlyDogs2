@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Comment from './Comment';
-import user from './users';
 import AddComment from './AddComment';
 
 export default function Comments(props) {
@@ -11,11 +10,26 @@ export default function Comments(props) {
     function handleAddComment(commentValue) {
 
 
-        onAdd(commentValue)
+        // onAdd(commentValue)
+        setCommentData([...commentData, { text: commentValue }])
+    }
+
+    function handleDeleteComment(commentId) {
+
+
+        setCommentData(commentData.filter(function (value, index, arr) {
+
+
+            return value.comment_id !== commentId;
+
+        }));
+
 
     }
 
 
+
+    // console.log(commentData)
 
     useEffect(() => {
 
@@ -42,7 +56,7 @@ export default function Comments(props) {
 
                 {/* List Comments this will require building out a basic comment component */}
                 {commentData.map((commentD, key) => (
-                    <Comment commentD={commentD} key={key} />
+                    <Comment commentD={commentD} key={key} userAvatarUrl={url} username={username} onDeleteComment={handleDeleteComment} />
 
                 ))}
             </div>
