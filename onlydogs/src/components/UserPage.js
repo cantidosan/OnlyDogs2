@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 export default function UserPage() {
 
     const [userPics, setUserPics] = useState([]);
+
     const params = useParams();
 
 
@@ -22,11 +23,12 @@ export default function UserPage() {
 
 
     useEffect(() => {
+
         const getUserPics = async () => {
 
             const res = await fetch(`http://localhost:3001/${params.username}`);
             const responseJson = await res.json();
-
+            console.log('should be 3 items', responseJson)
             // Ensure responseJson is suitable object to pass into components
             //below
             // console.log('responseJson :', responseJson)
@@ -36,9 +38,9 @@ export default function UserPage() {
 
         };
         getUserPics();
+
     }, [params.username]);
 
-    // console.log('user', userPics)
     return (
 
         <div>
@@ -47,7 +49,7 @@ export default function UserPage() {
 
                 <div className='flex basis-1/2 '>
 
-                    <UserPicGallery userPics={userPics} />
+                    <UserPicGallery userPics={userPics} username={params.username} />
 
                 </div>
                 <div className='flex basis-1/2 '>

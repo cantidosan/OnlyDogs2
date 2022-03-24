@@ -17,9 +17,6 @@ services:
       - HOST=localhost
       - POSTGRES_HOST=db
       - CHOKIDAR_USEPOLLING=true
-      - CLOUDINARY_CLOUD_NAME=daydto7f1
-      - CLOUDINARY_KEY=998933882185921
-      - CLOUDINARY_SECRET=VNOBnAxNf76W1tlE5Lv5J_UdLvc
 
     volumes:
       - ./backend:/usr/src/app:cached

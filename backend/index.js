@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 
+
 const port = 3001 /// process.env.PORT instead of hardcode
 app.use(cors())
 app.options('*', cors())
@@ -52,11 +53,8 @@ app.get('/:username', (req, res) => {
 
   const username = req.params.username;
 
-
-  console.log('username', username);
-
   const userPicQuery = `SELECT 
-                            url,pic_id
+                            url,pic_id,pet_id
                           FROM
                             users
                           INNER JOIN
@@ -64,7 +62,7 @@ app.get('/:username', (req, res) => {
                           ON
                             users.user_id = pictures.user_id
                           WHERE 
-                            username = $1::text`;
+                            username = $1::text;`
 
   pool.query(userPicQuery, [username], (error, results) => {
     if (error) {
@@ -73,17 +71,15 @@ app.get('/:username', (req, res) => {
       throw error
     }
     else {
-      // console.log(results.rows)
-      console.log('sucess log')
+
       res.status(200).json(results.rows)
     }
   })
 
-
-
-  /* pool method makes request for pictures from db */
-
 })
+
+
+
 
 app.get('/:username/comments', (req, res) => {
 
@@ -118,7 +114,7 @@ app.get('/:username/comments', (req, res) => {
     }
     else {
       // console.log(results.rows)
-      console.log(results.rows)
+
       res.status(200).json(results.rows)
     }
   })
@@ -199,6 +195,169 @@ app.delete('/:username/comments/', (req, res) => {
   })
 
 })
+app.post('/:username/pets', (req, res) => {
+
+  const { username } = req.params;
+  const { petName, petBreed, petAge } = req.body;
+
+  addPetQuery = `INSERT INTO 
+                  pets(petname,breed,link,age,user_id)
+
+                VALUES
+                  (
+                    $2,$3,'empty',$4,
+                    (
+
+                      SELECT 
+                        user_id
+                      FROM
+                        users
+                      WHERE 
+                        username = $1::text
+
+                    )
+                
+                )
+                RETURNING pet_id;`
+
+  pool.query(addPetQuery, [username, petName, petBreed, petAge], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.json({
+
+        message: results
+      })
+      console.log('message:', results)
+    }
+
+  })
+
+
+})
+
+app.get('/:username/pets', (req, res) => {
+
+  const { username } = req.params;
+
+
+  getPetQuery = `SELECT *
+                  FROM pets
+                  WHERE user_id = (
+                    SELECT user_id FROM 
+                users WHERE username = $1)
+                ;`
+
+  pool.query(getPetQuery, [username], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.status(200).json(results.rows)
+
+
+    }
+
+  })
+
+
+})
+
+
+
+
+
+
+
+
+app.post('/:username/pictures', (req, res) => {
+
+  const { username } = req.params;
+  console.log('req body:', req.body)
+  const { picId: { url }, petId } = req.body;
+
+  addPictureQuery = `INSERT INTO
+                      pictures(pet_id,url,user_id)
+                        
+                     VALUES($3,$2,
+                        (SELECT 
+                          user_id
+                        FROM
+                          users
+                        WHERE 
+                          username = $1::text
+                        )
+                      )
+                    
+                    `;
+  pool.query(addPictureQuery, [username, url, petId], (error, results) => {
+    if (error) {
+      res.status(500)
+    }
+    else {
+      res.status(200).json(results.rows)
+    }
+  })
+
+
+})
+
+
+app.delete('/:username/pictures/:picId', (req, res) => {
+
+
+  const { username, picId } = req.params;
+
+  delPictureQuery = ` DELETE FROM 
+                        pictures
+                      WHERE
+                        pic_id = $2 AND user_id = (
+                          SELECT 
+                          user_id
+                        FROM
+                          users
+                        WHERE 
+                          username = $1::text
+                        )
+                      ;`
+
+  pool.query(delPictureQuery, [username, picId], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.json({
+
+        message: results
+      })
+    }
+
+  })
+
+
+})
+
+
+
+
+
+
+
+
+
 
 
 

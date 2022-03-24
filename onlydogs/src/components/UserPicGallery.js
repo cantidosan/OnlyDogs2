@@ -1,12 +1,13 @@
 import React from 'react';
 import pets from '../petinfo';
 import user from './users';
-import GalleryPics from './GalleryPics';
+import GalleryPics from './GalleryPic';
 
 
 export default function UserPicGallery(props) {
 
     const { userPics } = props;
+    console.log('UserPics', userPics)
 
     return (
         <div className="flex " >
@@ -15,7 +16,7 @@ export default function UserPicGallery(props) {
 
                 {userPics.map((user, key) => (
 
-                    <GalleryPics user={user} key={key} />
+                    <GalleryPics url={user.url} key={key} title={user.username} picId={user.pic_id} />
 
 
                 ))};

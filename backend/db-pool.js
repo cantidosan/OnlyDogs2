@@ -11,6 +11,6 @@ const pool = new Pool({
 
 });
 
-console.log(process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, process.env.DATABASE)
+
 module.exports = pool;
 

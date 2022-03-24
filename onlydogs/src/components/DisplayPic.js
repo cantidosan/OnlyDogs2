@@ -1,80 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
-import { AdvancedImage } from '@cloudinary/react';
-import { Cloudinary } from "@cloudinary/url-gen";
-import { fill } from "@cloudinary/url-gen/actions/resize";
 
+import AddPetInfo from './AddPetInfo';
+import UploadPetInfo from './UploadPetInfo';
+import SelectPet from './SelectPet';
 
 
 export default function DisplayPic(props) {
 
-    const CLOUDINARY_KEY = '998933882185921'
-    const CLOUDINARY_SECRET = 'VNOBnAxNf76W1tlE5Lv5J_UdLvc'
     const { url } = props;
 
-    // const cld = new Cloudinary({
+    const [picId, setPicId] = useState("");
+    const [isAddingPetInfo, setIsAddingPetInfo] = useState(false);
 
-    //     cloud: {
-    //         cloudName: 'demo'
-    //     }
 
-    // });
 
-    // const myImage = cld.image('docs/models');
-    // myImage.resize(fill().width(250).height(250));
+    const [imageSelected, setImageSelected] = useState("");
 
-    const [imageSelected, setImageSelected] = useState("")
 
-    const handleImageUpload = async () => {
 
-        const formData = new FormData();
-        formData.append("file", imageSelected)
-        formData.append("upload_preset", "qbjfqx59")
 
-        // formData.append("timestamp", Date.now())
-        // formData.append("eager", "w_400,h_300,c_pad|w_260,h_200,c_crop");
-        // formData.append("api_key", CLOUDINARY_KEY)
-        // formData.append("signature", CLOUDINARY_SECRET)
 
-        console.log(formData.get("file"))
-        console.log(formData.get("upload_preset"))
+    const handleAddingPetInfo = (e) => {
 
-        const res = await fetch('https://api.cloudinary.com/v1_1/daydto7f1/auto/upload', {
-
-            method: 'POST',
-            // headers: {
-            //     'Accept': 'application/json',
-            //     'Content-Type': 'application/json'
-            // },
-            body: formData
-            // JSON.stringify({ formData })
-
-        })
+        console.log(e.target.value)
+        if (e.target.value === 'addPet') {
+            setIsAddingPetInfo(true);
+        }
+        else {
+            setIsAddingPetInfo(false);
+        }
     }
-
-
-
     return (
         <div>
-            {/* display user main profile image */}
-            {/* <AdvancedImage cldImg={myImage} /> */}
-            {/* <img src={url} alt="" /> */}
 
             <h2>PIC DETAILS</h2>
             <div className='flex flex-row justify-center'>
+                <div className="form-check">
+                    <input onChange={handleAddingPetInfo} checked={isAddingPetInfo} value="addPet" className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
 
-                <input
-                    type="file"
-                    onChange={(e) => {
-                        setImageSelected(e.target.files[0]);
+                        {isAddingPetInfo ? < AddPetInfo imageSelected={imageSelected} /> : ''}
 
-                    }}
-                />
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input onChange={handleAddingPetInfo} value="upload" className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked={!isAddingPetInfo} />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
 
-                <ButtonGroup>
-                    <Button onClick={handleImageUpload} variant="primary" size="mb-2">Upload</Button>
-                    <Button variant="danger">Delete</Button>
-                </ButtonGroup>
+                        Default checked radio
+                    </label>
+                    {!isAddingPetInfo ? <SelectPet /> : ''}
+                </div>
+                {<UploadPetInfo />}
             </div>
 
         </div>

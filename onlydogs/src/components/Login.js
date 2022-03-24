@@ -41,9 +41,6 @@ export default function Login() {
             return navigate("login");
         }
 
-
-
-
     }
 
     return (
