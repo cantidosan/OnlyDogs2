@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-export default function PetSelect() {
+import UploadPetInfo from './UploadPetInfo';
+export default function SelectPet() {
 
 
 
     const params = useParams();
-
+    const [petId, setPetId] = useState("")
     const [userPets, setUserPets] = useState([]);
+    // console.log('setPetId:', petId);
 
-    const handlePetChange = () => {
+    const handlePetChange = (e) => {
 
 
-
+        setPetId(e.target.value)
 
 
 
     }
-
-
-
 
     useEffect(() => {
 
@@ -30,19 +28,22 @@ export default function PetSelect() {
             const petObjects = await res.json();
             console.log('responseData:', petObjects)
             setUserPets(petObjects)
+
         }
         getUserPets();
+
     }, [params.username])
     return (
         <div>
-            <select className="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
+            <select onChange={handlePetChange} className="form-select" aria-label="Default select example">
+                <option >Open this select menu</option>
                 {
                     userPets.map((userPet, key) => (
-                        <option onChange={handlePetChange} value={userPet.pet_id} key={key}> {userPet.petname} </option>
+                        <option value={userPet.pet_id} key={key}> {userPet.petname} </option>
                     ))
                 }
             </select>
+            {petId === '' ? '' : <UploadPetInfo petId={petId} />}
 
         </div>
     )

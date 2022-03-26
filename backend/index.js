@@ -168,7 +168,7 @@ app.post('/:username/comments', (req, res) => {
 })
 
 
-app.delete('/:username/comments/', (req, res) => {
+app.delete('/:username/comments', (req, res) => {
 
   // const { commentId } = req.params;
 
@@ -271,19 +271,46 @@ app.get('/:username/pets', (req, res) => {
 
 
 })
+app.patch('/:username/pets', (req, res) => {
+
+  const { username } = req.params;
+  const { petId, picId: { url } } = req.body;
+
+  updatePetQuery = `UPDATE pets 
+                    SET link = $2
+                    WHERE pet_id = $1 ;`
 
 
 
+  pool.query(updatePetQuery, [petId, url], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.json({
+
+        message: results
+      })
+      console.log('message:', results)
+    }
+
+  })
 
 
-
+})
 
 
 app.post('/:username/pictures', (req, res) => {
 
   const { username } = req.params;
-  console.log('req body:', req.body)
+  // console.log('req body:', req.body)
   const { picId: { url }, petId } = req.body;
+
+
 
   addPictureQuery = `INSERT INTO
                       pictures(pet_id,url,user_id)

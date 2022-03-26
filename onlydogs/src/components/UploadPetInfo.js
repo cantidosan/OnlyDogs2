@@ -6,10 +6,10 @@ function UploadPetInfo(props) {
 
 
     const { petName, petAge, petBreed, petId } = props
+
     const params = useParams();
     const [picId, setPicId] = useState("");
     const [imageSelected, setImageSelected] = useState("");
-
 
 
     const handleImageUpload = async () => {
@@ -36,29 +36,49 @@ function UploadPetInfo(props) {
             // JSON.stringify({ formData })
 
         })
+
         const cloudinaryObj = await res.json()
         /// we can now access the image id after it is uploaded to cloudinary
-
         setPicId(cloudinaryObj)
 
     }
 
+
+    console.log('cloudinaryObj:', picId)
+
     useEffect(() => {
 
-        const resImageInfo = fetch(`http://localhost:3001/${params.username}/pictures`, {
+        fetch(`http://localhost:3001/${params.username}/pictures`, {
 
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
+
             // Commented out because we havent worked out how component
             // recieves the petID object
             body: JSON.stringify({ picId, petId })
 
-        });
+        }).then(() => {
 
-    }, [picId, params.username])
+            fetch(`http://localhost:3001/${params.username}/pets`, {
+
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                // Commented out because we havent worked out how component
+                // recieves the petID object
+                body: JSON.stringify({ picId, petId })
+
+            }).then(response => { console.log(response) })
+
+        })
+
+    }, [picId])
+
 
     return (
         <div>UploadPetInfo

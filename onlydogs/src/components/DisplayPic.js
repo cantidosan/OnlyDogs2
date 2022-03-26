@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
-
 import AddPetInfo from './AddPetInfo';
 import UploadPetInfo from './UploadPetInfo';
 import SelectPet from './SelectPet';
@@ -9,16 +8,12 @@ import SelectPet from './SelectPet';
 export default function DisplayPic(props) {
 
     const { url } = props;
-
     const [picId, setPicId] = useState("");
     const [isAddingPetInfo, setIsAddingPetInfo] = useState(false);
 
 
 
     const [imageSelected, setImageSelected] = useState("");
-
-
-
 
 
     const handleAddingPetInfo = (e) => {
@@ -52,7 +47,8 @@ export default function DisplayPic(props) {
                     </label>
                     {!isAddingPetInfo ? <SelectPet /> : ''}
                 </div>
-                {<UploadPetInfo />}
+
+                {/* {<UploadPetInfo />} */}
             </div>
 
         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import UploadPetInfo from './UploadPetInfo';
 function AddPetInfo(props) {
 
 
@@ -62,6 +63,7 @@ function AddPetInfo(props) {
                 value="Submit"
                 onClick={handlePetInfoUpload}
             />
+            {petId === '' ? '' : <UploadPetInfo petId={petId} />}
 
 
         </div>
