@@ -15,7 +15,7 @@ export default function UserListDisplay() {
             .then(res => res.json())
             .then(
                 (pets) => {
-                    console.log(typeof pets)
+
                     setPetData(pets)
 
                 })
@@ -25,7 +25,16 @@ export default function UserListDisplay() {
 
     return (
         <>
-            <div className="flex basis-1/2 flex-row flex-wrap " >
+            {/* <div className="flex basis-1/2 flex-row flex-wrap " >
+
+                {petData.map((pet, key) => (
+
+                    <PetCard pet={pet} key={key} />
+
+                ))}
+
+            </div> */}
+            <div className="grid gap-4 grid-cols-3 grid-rows-3" >
 
                 {petData.map((pet, key) => (
 

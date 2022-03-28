@@ -12,6 +12,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState("");
+
     let navigate = useNavigate();
 
 
@@ -29,15 +30,18 @@ export default function Login() {
 
         });
         ///const response = await res.json();
-        const content = await res.json();
-        if (content.message.rowCount !== 0) {
+        const user = await res.json();
+        console.log('Users: %o', user)
+
+        if (user && user.username) {
 
             setIsLoggedIn("true");
             console.log(isLoggedIn)
 
-            return navigate(`/${username}`);
+            return navigate(`/${user.username}`);
         }
         else {
+
             return navigate("login");
         }
 

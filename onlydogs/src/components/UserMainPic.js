@@ -1,7 +1,8 @@
 import React from 'react';
-import DisplayPic from './DisplayPic';
+import AddPetDetails from './AddPetDetails';
 import MiniGallery from './MiniGallery';
 import Comments from './Comments';
+import DisplayMainPetProfilePic from './DisplayMainPetProfilePic';
 
 
 
@@ -21,7 +22,13 @@ export default function UserMainPic(props) {
         <div className='flex'>
 
             <div className="flex flex-col">
-                <DisplayPic url={url} />
+                <div>
+
+                    <DisplayMainPetProfilePic />
+
+                </div>
+                <AddPetDetails url={url} />
+
             </div>
             <div>
                 <Comments username={username} url={url} onAdd={handleAddComments} picId={picId} />

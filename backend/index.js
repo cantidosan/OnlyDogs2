@@ -32,19 +32,28 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
 
   const { username } = req.body;
-  const loginQuery = `SELECT username FROM users WHERE username = '${username}';`
+  const loginQuery = `SELECT * FROM users WHERE username = '${username}'
+                      ;`
 
   /*pool method takes inc params and execute thier resp methods */
 
 
   pool.query(loginQuery, (error, results) => {
+
+    console.log('results:', results.rows)
+
+    const [user] = results.rows;
+    delete user.password;
+
     if (error) {
 
       res.status(500)
 
     }
     else {
-      res.json({ message: results })
+
+      res.status(200).json(user)
+
     }
   })
 })
@@ -166,6 +175,70 @@ app.post('/:username/comments', (req, res) => {
   })
 
 })
+app.get('/browse/:pet_id', (req, res) => {
+
+  const { pet_id } = req.params;
+  console.log('PetId:', pet_id)
+
+  // better  QUERY NEEDED HERE
+  const getPetPicsQuery = `SELECT 
+                            *
+                          FROM 
+                            pictures
+                          WHERE
+                            pictures.pet_id = $1;
+
+                          `
+
+
+
+
+  pool.query(getPetPicsQuery, [pet_id], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.status(200).json(results.rows)
+    }
+
+  })
+
+})
+
+app.get('/browse/:pic_id/comments', (req, res) => {
+
+  const { pic_id } = req.params;
+
+
+  // better  QUERY NEEDED HERE
+
+  const getCommentQuery = `SELECT * 
+                           FROM 
+                            comment
+                           
+                            WHERE comment.pic_id = $1
+                          ; `
+
+  pool.query(getCommentQuery, [pic_id], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.status(200).json(results.rows)
+    }
+
+  })
+
+})
+
 
 
 app.delete('/:username/comments', (req, res) => {
@@ -376,6 +449,34 @@ app.delete('/:username/pictures/:picId', (req, res) => {
 
 
 })
+
+app.get('/Browse/:pet_id', (req, res) => {
+
+  const pet_id = req.params.pet_id;
+
+
+  const getPetPicsQuery = `SELECT 
+                            *
+                          FROM
+                            pictures
+                          WHERE 
+                            pet_id = $1
+                        ;`
+
+  pool.query(getPetPicsQuery, [pet_id], (error, results) => {
+    if (error) {
+
+      res.status(500)
+      throw error
+    }
+    else {
+
+      res.status(200).json(results.rows)
+    }
+  })
+
+})
+
 
 
 

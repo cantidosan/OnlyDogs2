@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="login" element={<Login />} />
           <Route path=":username" element={<UserPage />} />
-          <Route path="browse" element={<Browse />} />
+          <Route path="Browse/:pet_id" element={<Browse />} />
 
         </Routes>
       </BrowserRouter>

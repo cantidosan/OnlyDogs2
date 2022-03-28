@@ -5,35 +5,14 @@ import { Image } from 'cloudinary-react';
 import { useParams } from 'react-router-dom';
 
 
-export default function GalleryPics(props) {
+export default function PetGalleryPic(props) {
 
-    const { url, picId } = props;
+    const { url, pet_id } = props;
     const params = useParams();
 
 
 
-    const handleImageDelete = async () => {
 
-
-        const res = await fetch(`http://localhost:3001/${params.username}/pictures/${picId}`, {
-
-            method: 'DELETE',
-            // headers: {
-            //     'Accept': 'application/json',
-            //     'Content-Type': 'application/json'
-            // },
-            // body: JSON.stringify({ url })
-            // JSON.stringify({ formData })
-
-        })
-
-    }
-    // useEffect(() => {
-
-
-
-
-    // })
     // console.log('Gallery Pic:', url)
     return (
         <div className="flex">
@@ -45,7 +24,7 @@ export default function GalleryPics(props) {
                     <Card.Text>
 
                     </Card.Text>
-                    <Button onClick={handleImageDelete} variant="danger">Delete</Button>
+                    {/* <Button onClick={handleImageDelete} variant="danger">Delete</Button> */}
                 </Card.Body>
             </Card>
         </div>

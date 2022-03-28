@@ -12,10 +12,7 @@ export default function SelectPet() {
 
     const handlePetChange = (e) => {
 
-
         setPetId(e.target.value)
-
-
 
     }
 

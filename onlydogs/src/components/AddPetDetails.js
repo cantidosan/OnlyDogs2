@@ -29,7 +29,7 @@ export default function DisplayPic(props) {
     return (
         <div>
 
-            <h2>PIC DETAILS</h2>
+            <h2>PET DETAILS</h2>
             <div className='flex flex-row justify-center'>
                 <div className="form-check">
                     <input onChange={handleAddingPetInfo} checked={isAddingPetInfo} value="addPet" className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />

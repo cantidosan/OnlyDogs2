@@ -1,7 +1,7 @@
 import React from 'react';
 import pets from '../petinfo';
 import user from './users';
-import GalleryPics from './GalleryPic';
+import GalleryPic from './GalleryPic';
 
 
 export default function UserPicGallery(props) {
@@ -16,7 +16,7 @@ export default function UserPicGallery(props) {
 
                 {userPics.map((user, key) => (
 
-                    <GalleryPics url={user.url} key={key} title={user.username} picId={user.pic_id} />
+                    <GalleryPic url={user.url} key={key} title={user.username} picId={user.pic_id} />
 
 
                 ))};

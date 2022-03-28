@@ -1,6 +1,6 @@
 import React from 'react';
 import dog1 from '../img/dog1.png';
-import pets from '../petinfo';
+
 import { Carousel } from 'react-bootstrap'
 import { useEffect, useState } from 'react';
 
@@ -16,7 +16,7 @@ export default function Featured() {
             .then(res => res.json())
             .then(
                 (pets) => {
-                    console.log(pets)
+
                     setPetData(pets)
 
                 })
@@ -26,7 +26,7 @@ export default function Featured() {
 
 
     return (
-        <div className='flex basis-1/2 '>
+        <div className='flex'>
             <Carousel>
                 {petData.map((pet, index) => {
 
