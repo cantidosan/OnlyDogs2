@@ -2,7 +2,8 @@ const pool = require('./db-pool');
 const express = require('express')
 const cors = require('cors')
 const app = express()
-
+const verifyUsername = require('./middleware/verifyUsername');
+const verifyToken = require('./middleware/verifyToken');
 
 const port = 3001 /// process.env.PORT instead of hardcode
 app.use(cors())
@@ -29,10 +30,57 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/login', (req, res) => {
+
+app.post('/signUp', [verifyUsername], (req, res) => {
+
+  const { username, password, email } = req.body;
+
+  const addUserQuery = `INSERT INTO users
+                          (
+                            username,
+                            password,
+                            email,
+                            created_on,
+                            last_login,
+                            user_pic_url
+                          )
+                        VALUES($1,$2,$3,$4,$5,$6)
+                        RETURNING username,user_id,user_pic_url, created_on,last_login,email
+                      ;`
+
+  /*pool method takes inc params and execute thier resp methods */
+
+
+  pool.query(addUserQuery, [
+    username,
+    password,
+    email,
+    (new Date()).toISOString(),
+    (new Date()).toISOString(),
+    'https://picsum.photos/1920/1080'
+  ], (error, results) => {
+
+    console.log('results:', results)
+
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.status(200).json(results.rows[0])
+
+    }
+  })
+})
+app.post('/login', [verifyToken], (req, res) => {
 
   const { username } = req.body;
-  const loginQuery = `SELECT * FROM users WHERE username = '${username}'
+  const loginQuery = `SELECT * 
+                      FROM users 
+                      WHERE username = '${username}'
                       ;`
 
   /*pool method takes inc params and execute thier resp methods */
@@ -86,6 +134,37 @@ app.get('/:username', (req, res) => {
   })
 
 })
+
+
+app.get('/findUser/:user_id', (req, res) => {
+
+  console.log('params:', req.params)
+
+  const user_id = req.params.user_id;
+
+  console.log('findUser/ UserId:', user_id)
+
+  const userInfoQuery = `SELECT 
+                            user_pic_url,username
+                          FROM
+                            users
+                          WHERE 
+                            user_id = $1;`
+
+  pool.query(userInfoQuery, [user_id], (error, results) => {
+    if (error) {
+
+      res.status(500)
+      throw error
+    }
+    else {
+
+      res.status(200).json(results.rows)
+    }
+  })
+
+})
+
 
 
 
@@ -151,6 +230,36 @@ addCommentQuery = `INSERT INTO
                     ),$3)`;
 
 
+
+app.post('/addcomments', (req, res) => {
+
+
+
+  const { commentValue, user_id, pic_id } = req.body;
+
+  console.log('userid', user_id)
+  addCommentQuery = `
+                    INSERT INTO
+                      comment(text,user_id,pic_id)
+                    VALUES($1,$3,$2);
+                   `
+
+  pool.query(addCommentQuery, [commentValue, pic_id, user_id], (error, results) => {
+
+    if (error) {
+
+      res.status(500)
+
+    }
+    else {
+
+      res.status(200).json(results.rows)
+    }
+
+  })
+
+})
+
 app.post('/:username/comments', (req, res) => {
 
   const { username } = req.params;
@@ -178,7 +287,7 @@ app.post('/:username/comments', (req, res) => {
 app.get('/browse/:pet_id', (req, res) => {
 
   const { pet_id } = req.params;
-  console.log('PetId:', pet_id)
+  // console.log('PetId:', pet_id)
 
   // better  QUERY NEEDED HERE
   const getPetPicsQuery = `SELECT 

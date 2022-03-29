@@ -9,6 +9,7 @@
     "cloudinary-react": "^1.7.1",
     "cross-env": "^7.0.3",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3"
   },
   "devDependencies": {

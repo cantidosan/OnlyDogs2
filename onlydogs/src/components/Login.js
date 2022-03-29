@@ -3,15 +3,22 @@ import { useState } from "react";
 import Axios from 'axios';
 import UserPage from './UserPage';
 import { useNavigate } from 'react-router-dom';
+import { useStateValue } from '../state';
+
 
 ///We'll be using Oauth to build this piece out
 
 export default function Login() {
 
+
     const [username, setName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState("");
+
+    const [{ user }, dispatch] = useStateValue();
+
+    console.log('User: ', user);
 
     let navigate = useNavigate();
 
@@ -31,18 +38,24 @@ export default function Login() {
         });
         ///const response = await res.json();
         const user = await res.json();
-        console.log('Users: %o', user)
+
 
         if (user && user.username) {
 
+            dispatch({ type: 'userLogin', payload: user });
             setIsLoggedIn("true");
-            console.log(isLoggedIn)
+            dispatch({ type: 'userLogin', payload: isLoggedIn });
 
-            return navigate(`/${user.username}`);
+
+
+            console.log('Userrr username:', user.username)
+
+            navigate(`/${user.username}`);
+
         }
         else {
 
-            return navigate("login");
+            navigate("login");
         }
 
     }
@@ -59,11 +72,11 @@ export default function Login() {
                 <input type="password" value={password} onChange={
                     e => setPassword(e.target.value)} />
             </label>
-            <label>
+            {/* <label>
                 <p>Email</p>
                 <input type="email" value={email} onChange={
                     e => setEmail(e.target.value)} />
-            </label>
+            </label> */}
             <div>
                 <button type="button" onClick={handleSubmit}>Submit</button>
 

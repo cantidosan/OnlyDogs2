@@ -8,6 +8,7 @@ export default function UserComments(props) {
     const params = useParams();
 
     const [commentData, setCommentData] = useState([]);
+
     console.log('Comment Data', commentData)
 
     // function handleAddComment(commentValue) {
@@ -27,7 +28,7 @@ export default function UserComments(props) {
             .then(comments => setCommentData(comments))
 
         console.log('Comment Data', commentData)
-    }, [])
+    }, [pic_id])
 
 
     return (

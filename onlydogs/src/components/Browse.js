@@ -33,7 +33,11 @@ export default function Browse() {
 
     }, [params.pet_id])
 
+    // function handleAddComments(commentValue) {
 
+
+    //     console.log(commentValue)
+    // }
 
     return (
         <div>

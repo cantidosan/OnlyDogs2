@@ -6,6 +6,8 @@ import pets from '../petinfo';
 import user from './users';
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import { useStateValue } from '../state';
+import { useNavigate } from 'react-router-dom';
 
 
 /// This will show the users Uploadded media 
@@ -14,21 +16,37 @@ import { useParams } from 'react-router-dom';
 export default function UserPage() {
 
     const [userPics, setUserPics] = useState([]);
+    const [{ user }, dispatch] = useStateValue();
 
     const params = useParams();
 
+    let navigate = useNavigate();
 
     {/*fetch here from DB to get user data*/ }
 
+    if (typeof (user) === null) {
 
+        navigate("/")
+
+    }
+
+
+
+    const isUserLoggedIn = !!user && (params.username === user.username)
+
+    // console.log('params.username:', params.username)
+    // console.log('user.username', user.username)
+    // console.log('!!User:', !!user)
+    // console.log('isUserLoggedIn', isUserLoggedIn)
 
     useEffect(() => {
+
 
         const getUserPics = async () => {
 
             const res = await fetch(`http://localhost:3001/${params.username}`);
             const responseJson = await res.json();
-            console.log('should be 3 items', responseJson)
+
             // Ensure responseJson is suitable object to pass into components
             //below
             // console.log('responseJson :', responseJson)
@@ -37,11 +55,23 @@ export default function UserPage() {
             setUserPics(responseJson);
 
         };
-        getUserPics();
+        if (isUserLoggedIn) {
 
-    }, [params.username]);
+            getUserPics();
+
+        } else {
+
+            navigate("/")
+        }
+
+    }, [isUserLoggedIn, params.username]);
+
+
+
 
     return (
+
+
 
         <div>
             <Header />
