@@ -1,4 +1,4 @@
-# OnlyDogs2
+# OnlyDogs
 Dog Centered React Pwa -With Social Media Components
 
 
