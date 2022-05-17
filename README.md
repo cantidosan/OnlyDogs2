@@ -6,6 +6,7 @@ Dog Centered React Pwa -With Social Media Components
 ## Table of contents
 
 * [General info](#general-info)
+* [Figma Mockup](#figma-mockup)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
@@ -20,6 +21,22 @@ Dog Centered React Pwa -With Social Media Components
   skillset.Along with exploring third party APIs & navigating multiple databases ,both locally and online with postgres and cloudinary respectivley.
   
 </p>
+
+## Figma Mockup
+![mockup-homepage](https://user-images.githubusercontent.com/82469261/168846189-1258d59b-e721-4ea6-a837-7c0c994271d6.JPG)
+
+![mockup-login](https://user-images.githubusercontent.com/82469261/168846202-ebd758d0-dc09-47e5-a7ba-42fbcdb87707.JPG)
+
+![mockup-userProfilePage](https://user-images.githubusercontent.com/82469261/168846231-5d41f942-7775-44a4-b4d2-ad1a35ecb64b.JPG)
+
+
+
+
+
+## Entity Relationship Diagram
+![ERD_onlydogs](https://user-images.githubusercontent.com/82469261/168845595-56f66f76-0c49-42f1-b075-b7adffc7e4ba.JPG)
+
+
 
 ## Technologies
 Project is created with:
