@@ -41,16 +41,20 @@ Dog Centered React Pwa -With Social Media Components
 ## Technologies
 Project is created with:
 
-  *  "@cloudinary/url-gen": "^1.7.0",
- *   "bcrypt": "^5.0.1",
- *   "cloudinary": "^1.28.1",
- *   "cloudinary-react": "^1.7.1",
- *   "cross-env": "^7.0.3",
- *   "express": "^4.17.2",
-*    "jsonwebtoken": "^8.5.1",
-*    "pg": "^8.7.3"
-*    "cors": "^2.8.5",
- *   "nodemon": "^2.0.15"
+
+![pngegg](https://user-images.githubusercontent.com/82469261/169050331-efd4f823-73e9-4ca9-b513-594c8f3513ce.png)
+![docker](https://user-images.githubusercontent.com/82469261/169050379-b40e07ec-3cea-47f8-a83f-3d67f81c1dd8.png)
+
+
+
+![react](https://user-images.githubusercontent.com/82469261/169050437-43b2612e-1524-43b5-827e-e2ddd0e64724.png)
+
+
+
+![postgres](https://user-images.githubusercontent.com/82469261/169050453-b0cb20e9-5494-4932-93c3-b7265b4f6292.png)
+
+
+![bootstrap](https://user-images.githubusercontent.com/82469261/169050470-c511cd50-e1e7-4ebb-b439-3690c89a5c2e.png)
 
 
 ## Setup
